@@ -2,62 +2,49 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abrir Rotas</title>
-    <script>
-
-        function abrirRotas() {
-            // Base da URL
-            const urlBase = "https://envios.adminml.com/logistics/monitoring-distribution/detail/";
-
-            // Captura o valor da caixa de entrada
-            const rotasInput = document.getElementById("rotas").value;
-
-            // Divide os números de rota por linha
-            const rotas = rotasInput.split("\n");
-
-            // Abrir cada rota imediatamente sem delay
-            rotas.forEach(function(rota) {
-                const urlCompleta = urlBase + rota.trim(); 
-                if (rota.trim()) {
-                    // Abre cada URL em uma nova aba
-                    window.open(urlCompleta, '_blank');
-                }
-            });
+    <title>Gerador de Link</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 30px;
         }
-
-        function abrirPacotes() {
-            // Base da URL
-            const urlBase = "https://envios.adminml.com/logistics/package-management/package/";
-
-            // Captura o valor da caixa de entrada
-            const pacotesInput = document.getElementById("pacotes").value;
-
-            // Divide os números de pacotes por linha
-            const pacotes = pacotesInput.split("\n");
-
-            // Abrir cada pacote imediatamente sem delay
-            pacotes.forEach(function(pacote) {
-                const urlCompleta = urlBase + pacote.trim();
-                if (pacote.trim()) {
-                    // Abre cada URL em uma nova aba
-                    window.open(urlCompleta, '_blank');
-                }
-            });
+        input, button {
+            padding: 10px;
+            font-size: 16px;
         }
-    </script>
+        a {
+            display: block;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-    <h1>Abrir Rotas</h1>
-    <p>Insira um número de rota por linha:</p>
-    <textarea id="rotas" rows="5" cols="40" placeholder="Exemplo: 12345&#10;67890&#10;54321"></textarea>
-    <br><br>
-    <button onclick="abrirRotas()">Abrir Rotas</button>
 
-    <h1>Abrir Detalhes de Pacotes</h1>
-    <p>Insira um número de pacote por linha:</p>
-    <textarea id="pacotes" rows="5" cols="40" placeholder="Exemplo: 12345&#10;67890&#10;54321"></textarea>
-    <br><br>
-    <button onclick="abrirPacotes()">Abrir Pacotes</button>
+    <h2>Gerar Link de Nota de Serviço</h2>
+
+    <input type="text" id="numero" placeholder="Digite o número">
+    <button onclick="gerarLink()">Gerar Link</button>
+
+    <a id="linkGerado" href="#" target="_blank"></a>
+
+    <script>
+        function gerarLink() {
+            let numero = document.getElementById("numero").value;
+
+            if (numero === "") {
+                alert("Digite um número!");
+                return;
+            }
+
+            let link = "http://192.168.1.110/contratadaweb/consultas/historico/notaservico_detalhe.jsp?NumServ=" 
+                        + numero + "&QTE=1";
+
+            let elementoLink = document.getElementById("linkGerado");
+            elementoLink.href = link;
+            elementoLink.textContent = link;
+        }
+    </script>
+
 </body>
 </html>
